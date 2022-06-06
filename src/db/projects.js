@@ -19,7 +19,7 @@ export const projects = [
       "images/danielrangel.me/4.png",
       "images/danielrangel.me/5.png",
     ],
-    bkgColor: "#213044",
+    bkgColor: "#ecfcd2",
     color: "#FFF",
     technologies: [
       "images/tech/net.png",

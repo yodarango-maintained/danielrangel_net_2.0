@@ -76,6 +76,7 @@
   <ProjectCarrousel
     images={modal.images}
     on:updateDescription={updateDescription}
+    borderColor={modal.bkgColor}
   />
   {#if !showTechStack}
     <p class={`project-description ${descriptionAnimation}`}>
@@ -202,7 +203,7 @@
     top: auto;
     left: 0;
     right: 0;
-    bottom: 15vh;
+    bottom: 5vh;
     margin: auto;
     width: 85%;
     color: black;
@@ -246,7 +247,7 @@
     }
     .project-description.desc-animation,
     .project-description.stay {
-      bottom: 15vh;
+      bottom: 5vh;
     }
   }
 
@@ -257,7 +258,7 @@
 
     .project-description.desc-animation,
     .project-description.stay {
-      bottom: 18vh;
+      bottom: 10vh;
     }
   }
 
@@ -269,7 +270,7 @@
 
     .project-description.desc-animation,
     .project-description.stay {
-      bottom: 22vh;
+      bottom: 15vh;
     }
   }
 
@@ -281,7 +282,7 @@
 
     .project-description.desc-animation,
     .project-description.stay {
-      bottom: 16vh;
+      bottom: 10vh;
     }
   }
 
@@ -293,7 +294,7 @@
 
     .project-description.desc-animation,
     .project-description.stay {
-      bottom: 24vh;
+      bottom: 15vh;
     }
   }
 

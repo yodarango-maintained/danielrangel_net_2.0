@@ -66,4 +66,10 @@
     background-repeat: no-repeat;
     opacity: 0.5;
   }
+
+  @media (min-width: 600px) {
+    .bkg {
+      bottom: -15vh;
+    }
+  }
 </style>

@@ -6,6 +6,7 @@
 
   // -- props
   export let images = [];
+  export let borderColor;
 
   // --state
   let currentScreen = 0;
@@ -51,7 +52,7 @@
     const position = (e.clientX / screenWidth) * 100;
 
     // remove the event from the document
-    document.onmousemove = "null";
+    document.onmousemove = null;
 
     // if the scroll to the left is greateer than 5vw finish the animation
     if (position < 45) {
@@ -137,31 +138,45 @@
     }
   };
 
-  // load the new image
-  const newImageIntro = () => {
-    console.log(currentScreen);
+  // find out the size of the screen \to load the correct image
+  let curedImgString = "";
+  const imageString = (imageString) => {
+    console.log(imageString);
+    if (device === "mobile") {
+      return (curedImgString = imageString);
+    } else if (device === "tablet") {
+      return (curedImgString = imageString.replace(".png", "I.png"));
+    } else {
+      return (curedImgString = imageString.replace(".png", "D.png"));
+    }
   };
 </script>
 
 <section class="carrousel-wrapper">
   <img
-    src={images[currentScreen]}
+    src={imageString(images[currentScreen])}
     alt={"project screenshot"}
-    class="image"
+    class="image {device === 'tablet'
+      ? 'image-ipad'
+      : device === 'desktop'
+      ? 'image-desktop'
+      : ''}"
     id="device-image"
-    style={`position: ${imagePos}; transform: translateX(${imageXCoor}px); opacity: ${imgOpacity}; display: ${imgDisplay}`}
+    style={`position: ${imagePos}; transform: translateX(${imageXCoor}px); opacity: ${imgOpacity}; display: ${imgDisplay}; border-color: ${borderColor}`}
   />
 
   {#if device === "mobile"}
     <div
       class="img-overlay mobile"
-      on:touchstart={touch}
+      on:touchstart={startDrag}
+      on:touchend={stopDrag}
       style={`transform: translateX(${imageXCoor}px);`}
     />
   {:else if device === "tablet"}
     <div
       class="img-overlay tablet"
-      on:touchstart={touch}
+      on:touchstart={startDrag}
+      on:touchend={stopDrag}
       style={`transform: translateX(${imageXCoor}px);`}
     />
   {:else}
@@ -194,6 +209,23 @@
     margin: 0vh auto 0;
     animation: screenshotEntry 3000ms ease;
     pointer-events: none;
+    border: 0.5rem solid white;
+    border-radius: 40px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .image-ipad {
+    width: 80%;
+    max-width: 650px;
+    max-height: 100%;
+  }
+
+  .image-desktop {
+    width: 80%;
+    max-width: 650px;
+    max-height: 100%;
+    border-radius: 60px;
   }
 
   .img-overlay {
@@ -224,6 +256,11 @@
       animation: screenshotEntry 3000ms ease;
       pointer-events: none;
     }
+
+    .image-ipad,
+    .image-desktop {
+      max-width: 100%;
+    }
   }
 
   @media (min-height: 800px) {
@@ -238,13 +275,13 @@
       animation: screenshotEntry 3000ms ease;
       pointer-events: none;
     }
-  }
 
-  @media (min-height: 950px) {
-    .image {
-      max-height: 60rem;
+    .image-ipad,
+    .image-desktop {
+      max-width: 100%;
     }
   }
+
   @keyframes screenshotEntry {
     0% {
       opacity: 0;
