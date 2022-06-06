@@ -85,7 +85,11 @@
 
   {#if showTechStack}
     <div class={`tech-stack ${entranceAnimation}`}>
-      <TechStack techStack={modal.technologies} />
+      <TechStack
+        techStack={modal.technologies}
+        git={modal.git}
+        url={modal.url}
+      />
     </div>
   {/if}
 
