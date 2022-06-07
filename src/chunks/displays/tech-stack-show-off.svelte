@@ -39,7 +39,7 @@
     height: 5rem;
     object-fit: cover;
     object-position: center;
-    margin: 0.5rem 0.5rem;
+    margin: 1rem 0.5rem;
   }
 
   .links-wrapper {
@@ -60,6 +60,29 @@
   @media (max-width: 370px) {
     .icon {
       margin: 0 1rem;
+    }
+  }
+
+  @media (max-height: 700px) {
+    .icon {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .links-wrapper {
+      transform: translateY(0);
+      margin: 0.5rem 0.5rem;
+    }
+  }
+  @media (max-width: 500px) {
+    .icon {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .links-wrapper {
+      transform: translateY(0);
+      margin: 0.5rem 0.5rem;
     }
   }
 </style>

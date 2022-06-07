@@ -1,14 +1,16 @@
 <script>
-  // -- svelte
-  // import {createEventDispatcher} from "svelte";
-  // const dispatch = createEventDispatcher();
-
+  // --- svelte
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
   // -- comps
   import TechStack from "../chunks/displays/tech-stack-show-off.svelte";
   import ProjectCarrousel from "../chunks/displays/project-carrousel.svelte";
 
   // -- props
   export let modal;
+
+  // helpers
+  import { deviceType } from "../helpers/get-device-type";
 
   // -- state
   let entranceAnimation = "";
@@ -50,11 +52,30 @@
 </script>
 
 <section class="view-project-modal">
+  {#if deviceType() === "mobile" || deviceType() === "tablet"}
+    <div
+      class="close-icon {entranceAnimation}"
+      on:click={() => {
+        dispatch("closemodal", {});
+      }}
+    />
+  {/if}
   {#if !instructionLayoutHide}
     <div class="intruction-layout">
       <div>
-        <p>Swipe right & lef to change screens</p>
-        <p>Tap twice anywhere to close modal</p>
+        {#if deviceType() === "mobile" || deviceType() === "tablet"}
+          <p>Tap left and right to toggle between screens</p>
+        {:else}
+          <p>
+            Use <span class="keyboard">&#8592;</span> and
+            <span class="keyboard">&#8594;</span> to toggle between screens
+          </p>
+          <p>Press <span class="keyboard">X</span> to close modal</p>
+
+          <p>Press <span class="keyboard">G</span> to redirect to git repo</p>
+
+          <p>Press <span class="keyboard">L</span> to see the live site</p>
+        {/if}
         <button on:click={handleAcknowledgeInstructions} class="std-button"
           >OK</button
         >
@@ -76,6 +97,7 @@
   <ProjectCarrousel
     images={modal.images}
     on:updateDescription={updateDescription}
+    on:closemodal
     borderColor={modal.bkgColor}
   />
   {#if !showTechStack}
@@ -110,6 +132,24 @@
     z-index: 5;
   }
 
+  .close-icon {
+    display: none;
+  }
+
+  .close-icon.animation {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 9;
+    width: 3rem;
+    height: 3rem;
+    background-image: url("images/icons/close.png");
+    display: block;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: textEntry 1500ms ease;
+  }
   .top-modal {
     display: none;
   }
@@ -125,6 +165,15 @@
     animation: topEntry 1000ms cubic-bezier(0.07, 0.97, 1, -0.96) 0ms;
   }
 
+  .keyboard {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.5rem solid white;
+    height: 4rem;
+    width: 5rem;
+    border-radius: 0.5rem;
+  }
   @keyframes topEntry {
     0% {
       top: -81vh;
@@ -141,16 +190,10 @@
     width: 200%;
     bottom: 0;
     left: -50%;
-    height: 30vh;
+    height: 75vh;
     border-top-right-radius: 50%;
     border-top-left-radius: 50%;
     animation: bottomEntry 1000ms cubic-bezier(0.07, 0.97, 1, -0.96) 0ms;
-  }
-
-  @media (min-height: 700px) {
-    .bottom-modal.animation {
-      height: 40vh;
-    }
   }
 
   @keyframes bottomEntry {
@@ -209,7 +252,7 @@
     color: black;
     z-index: inherit;
     z-index: 6;
-    animation: textEntry 1000ms ease;
+    animation: textEntry 500ms ease;
     font-size: var(--body-font-size);
     max-width: 600px;
   }
@@ -369,6 +412,9 @@ left: -4rem;
     flex-wrap: wrap;
   }
 
+  .intruction-layout div {
+    width: 100%;
+  }
   .intruction-layout p {
     font-size: var(--body-font-size);
     color: white;
