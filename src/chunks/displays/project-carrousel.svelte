@@ -21,15 +21,15 @@
   const deviceType = () => {
     const ua = navigator.userAgent;
     if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-      device = "tablet";
+      return "tablet";
     } else if (
       /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
         ua
       )
     ) {
-      device = "mobile";
+      return "mobile";
     }
-    device = "desktop";
+    return "desktop";
   };
 
   // -- call the device function
@@ -139,17 +139,17 @@
   };
 
   // find out the size of the screen \to load the correct image
-  let curedImgString = "";
   const imageString = (imageString) => {
-    console.log(imageString);
-    if (device === "mobile") {
-      return (curedImgString = imageString);
-    } else if (device === "tablet") {
-      return (curedImgString = imageString.replace(".png", "I.png"));
+    if (deviceType() === "mobile") {
+      return imageString;
+    } else if (deviceType() === "tablet") {
+      return imageString.replace(".png", "I.png");
     } else {
-      return (curedImgString = imageString.replace(".png", "D.png"));
+      return imageString.replace(".png", "D.png");
     }
   };
+
+  console.log(device);
 </script>
 
 <section class="carrousel-wrapper">
@@ -230,7 +230,7 @@
 
   .img-overlay {
     position: absolute;
-    width: 80%;
+    width: 95%;
     height: 110%;
     z-index: 3;
     top: -10%;
@@ -256,11 +256,6 @@
       animation: screenshotEntry 3000ms ease;
       pointer-events: none;
     }
-
-    .image-ipad,
-    .image-desktop {
-      max-width: 100%;
-    }
   }
 
   @media (min-height: 800px) {
@@ -274,11 +269,6 @@
       margin-top: -5vh;
       animation: screenshotEntry 3000ms ease;
       pointer-events: none;
-    }
-
-    .image-ipad,
-    .image-desktop {
-      max-width: 100%;
     }
   }
 

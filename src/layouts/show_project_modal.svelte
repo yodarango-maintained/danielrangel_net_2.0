@@ -227,7 +227,7 @@
     top: auto;
     left: 0;
     right: 0;
-    bottom: 5vh;
+    bottom: 0vh;
     margin: auto;
     opacity: 1;
     position: fixed;
@@ -253,7 +253,7 @@
 
   @media (min-height: 700px) {
     .tech-stack.animation {
-      bottom: 9vh;
+      bottom: 4vh;
     }
 
     .project-description.desc-animation,

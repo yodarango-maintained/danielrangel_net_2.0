@@ -20,7 +20,7 @@
 <style>
   .icon-wrapper {
     width: 100%;
-    margin: 2rem auto;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -39,7 +39,7 @@
     height: 5rem;
     object-fit: cover;
     object-position: center;
-    margin: 1rem 1.5rem;
+    margin: 0.5rem 0.5rem;
   }
 
   .links-wrapper {
