@@ -1,60 +1,30 @@
 <script>
   // -- svelte
-  import { onMount } from "svelte";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
   // -- props
   export let images = [];
+  export let borderColor;
 
   // --state
   let currentScreen = 0;
-  let device = "";
   let imageXCoor = 0;
   let imgDisplay = "block";
   let imgOpacity = 1;
   let imagePos = "relative";
-  let newScreenClass = "";
 
-  // -- get the device type to know whether to use mouse or touch events
-  const deviceType = () => {
-    const ua = navigator.userAgent;
-    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-      device = "tablet";
-    } else if (
-      /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
-        ua
-      )
-    ) {
-      device = "mobile";
-    }
-    device = "desktop";
-  };
+  // helpers
+  import { deviceType } from "../../helpers/get-device-type";
 
-  // -- call the device function
-  onMount(() => {
-    deviceType();
-  });
-
-  // -- activate the drag
-  const startDrag = () => {
-    const screenHalf = window.innerWidth / 2;
+  // -- find out whether to toggle backward or forward
+  const toggleScreens = (touchPoint) => {
     imagePos = "absolue";
-    document.onmousemove = (e) => {
-      imageXCoor = e.clientX - screenHalf;
-    };
-  };
-
-  // -- deactivate the drag
-  const stopDrag = (e) => {
     const screenWidth = window.innerWidth;
-    const position = (e.clientX / screenWidth) * 100;
+    const position = (touchPoint / screenWidth) * 100;
 
-    // remove the event from the document
-    document.onmousemove = "null";
-
-    // if the scroll to the left is greateer than 5vw finish the animation
-    if (position < 45) {
+    // if the touch is on the rigth toggle forth
+    if (position > 55) {
       const finsihAnimation = setInterval(() => {
         // scroll away and reduce opacity
         imageXCoor = imageXCoor - 10;
@@ -91,7 +61,7 @@
           }, intervalFreq);
         }
       }, 10);
-    } else if (position > 55) {
+    } else if (position < 45) {
       const finsihAnimation = setInterval(() => {
         // scroll away and reduce opacity
         imageXCoor = imageXCoor + 10;
@@ -101,9 +71,11 @@
         if (imageXCoor > window.innerWidth) {
           clearInterval(finsihAnimation);
 
-          if (currentScreen + 1 === images.length) {
+          /*if (currentScreen + 1 === images.length) {
             currentScreen = 0;
-          } else if (currentScreen === 0) {
+          } else
+          */
+          if (currentScreen === 0) {
             currentScreen = images.length - 1;
           } else if (currentScreen > 0) {
             currentScreen = currentScreen - 1;
@@ -137,40 +109,63 @@
     }
   };
 
-  // load the new image
-  const newImageIntro = () => {
-    console.log(currentScreen);
+  // handle the toggle event
+  const handleToggle = (e) => {
+    toggleScreens(e.clientX);
+  };
+
+  if (deviceType() === "desktop") {
+    document.addEventListener("keydown", (e) => {
+      console.log(e.key);
+      if (e.key === "ArrowRight") {
+        toggleScreens(10000);
+      } else if (e.key === "ArrowLeft") {
+        toggleScreens(0);
+      } else if (e.key === "x") {
+        dispatch("closemodal", {});
+      }
+    });
+  }
+
+  // find out the size of the screen \to load the correct image
+  const imageString = (imageString) => {
+    if (deviceType() === "mobile" || window.innerWidth < 600) {
+      return imageString;
+    } else if (deviceType() === "tablet" || window.innerWidth < 800) {
+      return imageString.replace(".png", "I.png");
+    } else {
+      return imageString.replace(".png", "D.png");
+    }
   };
 </script>
 
 <section class="carrousel-wrapper">
   <img
-    src={images[currentScreen]}
+    src={imageString(images[currentScreen])}
     alt={"project screenshot"}
-    class="image"
+    class="image {deviceType() === 'tablet'
+      ? 'image-ipad'
+      : deviceType() === 'desktop'
+      ? 'image-desktop'
+      : ''}"
     id="device-image"
-    style={`position: ${imagePos}; transform: translateX(${imageXCoor}px); opacity: ${imgOpacity}; display: ${imgDisplay}`}
+    style={`position: ${imagePos}; transform: translateX(${imageXCoor}px); opacity: ${imgOpacity}; display: ${imgDisplay}; border-color: ${borderColor}`}
   />
 
-  {#if device === "mobile"}
+  {#if deviceType() === "mobile"}
     <div
       class="img-overlay mobile"
-      on:touchstart={touch}
+      on:click={handleToggle}
       style={`transform: translateX(${imageXCoor}px);`}
     />
-  {:else if device === "tablet"}
+  {:else if deviceType() === "tablet"}
     <div
       class="img-overlay tablet"
-      on:touchstart={touch}
+      on:click={handleToggle}
       style={`transform: translateX(${imageXCoor}px);`}
     />
   {:else}
-    <div
-      class="img-overlay desktop"
-      on:mousedown={startDrag}
-      on:mouseup={stopDrag}
-      style="{`transform: translateX(${imageXCoor}px);`}}"
-    />
+    <div />
   {/if}
 </section>
 
@@ -194,11 +189,28 @@
     margin: 0vh auto 0;
     animation: screenshotEntry 3000ms ease;
     pointer-events: none;
+    border: 0.5rem solid white;
+    border-radius: 40px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .image-ipad {
+    width: 80%;
+    max-width: 650px;
+    max-height: 100%;
+  }
+
+  .image-desktop {
+    width: 80%;
+    max-width: 650px;
+    max-height: 100%;
+    border-radius: 60px;
   }
 
   .img-overlay {
     position: absolute;
-    width: 80%;
+    width: 95vw;
     height: 110%;
     z-index: 3;
     top: -10%;
@@ -207,10 +219,6 @@
     bottom: auto;
     margin: auto;
     cursor: pointer;
-  }
-
-  .img-overlay.mobile {
-    max-width: 300px;
   }
 
   @media (min-height: 600px) {
@@ -240,11 +248,6 @@
     }
   }
 
-  @media (min-height: 950px) {
-    .image {
-      max-height: 60rem;
-    }
-  }
   @keyframes screenshotEntry {
     0% {
       opacity: 0;
