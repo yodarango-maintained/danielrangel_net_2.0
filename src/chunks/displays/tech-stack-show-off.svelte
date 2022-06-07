@@ -12,8 +12,8 @@
     {/each}
   </div>
   <div class="links-wrapper">
-    <a href={git}>Go Git It</a>
-    <a href={url}>See It Live</a>
+    <a href={git} target="_blank" rel="noopener noreferrer">Go Git It</a>
+    <a href={url} target="_blank" rel="noopener noreferrer">See It Live</a>
   </div>
 </div>
 

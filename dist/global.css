@@ -1,0 +1,212 @@
+@import url("https://use.typekit.net/jxz3qlh.css");
+/****************************************  variables *********************************** */
+:root {
+  /*********** Colors ********************/
+  --font-color: #464887;
+
+  /*********** Font Family ***************/
+  --main-font: marydale, sans-serif; /*? w: 400 & 900*/
+  --accent-font: hobeaux, sans-serif; /*? w: 900 &  700*/
+
+  /*********** Font Sizing ***************/
+  --body-font-size: 2rem;
+  --main-title-size: 3rem;
+  --subtitle-size: 2.2rem;
+  --intro-title: 5rem;
+
+  /*********** Spacing Elements **********/
+  --xxsmall-spacing: 0.3rem;
+  --xsmall-spacing: 0.5rem;
+  --small-spacing: 1rem;
+  --medium-spacing: 1.5rem;
+  --large-spacing: 2.2rem;
+  --xlarge-spacing: 2.8rem;
+  --xxlarge-spacing: 3.5rem;
+
+  /*********** Main Wrapper *************/
+  --main-wrapper: 92%;
+  --max-width-main-wrapper: 50rem;
+
+  /*********** Breaks ********************/
+  --ipad-break: 600px;
+  --laptop-break: 800px;
+  --desktop-break: 1050px;
+}
+
+/****************************************  resets *********************************** */
+html {
+  font-size: 10px;
+}
+
+* {
+  font-size: 100%;
+  border: none;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-style: none;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: radial-gradient(circle at center, #ffffff, #e5eaff);
+  background-repeat: no-repeat;
+  height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.8em;
+  color: var(--font-color);
+  font-family: var(--main-font);
+  font-weight: 400;
+  font-size: var(--body-font-size);
+}
+
+a:visited,
+a:active,
+a:link {
+  color: inherit;
+  text-decoration: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/****************************************  Globals *********************************** */
+.global-wrapper {
+  width: 90%;
+  margin: auto;
+}
+
+.main-wrapper {
+  width: var(--main-wrapper);
+  max-width: var(--max-width-main-wrapper);
+  height: 100%;
+  margin: auto;
+}
+
+/* ------------------Icons                                                       */
+.std-icon {
+  display: block;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: var(--icon-sizing);
+  height: var(--icon-sizing);
+}
+
+/*--------------- Containers:                                                     */
+.std-flex-row,
+.std-flex-column,
+.std-flex--nowrap,
+.std-flex--start,
+.std-flex--end {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.std-flex-column {
+  flex-flow: column;
+}
+
+.std-flex--nowrap {
+  flex-wrap: nowrap;
+}
+
+.std-flex--start {
+  justify-content: flex-start;
+}
+
+.std-flex--end {
+  justify-content: flex-end;
+}
+
+/* ----------------- buttons                                */
+.std-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  font-family: var(--accent-font);
+  font-weight: 700;
+  color: var(--font-color);
+  text-decoration: underline;
+}
+
+.std-button:hover {
+  cursor: pointer;
+}
+
+@media (min-width: 700px) {
+  :root {
+    /*********** Font Sizing ***************/
+    --body-font-size: 2.3rem;
+    --main-title-size: 3.3rem;
+    --subtitle-size: 2.5rem;
+    --intro-title: 6rem;
+
+    /****************************************/
+    /*********** Spacing Elements **********/
+    /**************************************/
+    --xxsmall-spacing: 0.5rem;
+    --xsmall-spacing: 0.7rem;
+    --small-spacing: 1.2rem;
+    --medium-spacing: 1.8rem;
+    --large-spacing: 2.5rem;
+    --xlarge-spacing: 3rem;
+    --xxlarge-spacing: 3.8rem;
+
+    /****************************************/
+    /*********** Main Wrapper *************/
+    /**************************************/
+    --main-wrapper: 90%;
+    --max-width-main-wrapper: 80rem;
+  }
+}
+
+/****************************************  DESKTOP BREAKPOINT *********************************** */
+
+@media (min-width: 800px) {
+  :root {
+    /*********** Font Sizing ***************/
+    --body-font-size: 2.5rem;
+    --main-title-size: 5rem;
+    --subtitle-size: 3rem;
+    --intro-title: 7rem;
+
+    /****************************************/
+    /*********** Spacing Elements **********/
+    /**************************************/
+    --xxsmall-spacing: 0.8rem;
+    --xsmall-spacing: 1rem;
+    --small-spacing: 1.5rem;
+    --medium-spacing: 2.2rem;
+    --large-spacing: 2.8rem;
+    --xlarge-spacing: 3.5em;
+    --xxlarge-spacing: 4.2rem;
+
+    /****************************************/
+    /*********** Main Wrapper *************/
+    /**************************************/
+    --main-wrapper: 90%;
+    --max-width-main-wrapper: 110rem;
+  }
+}
+
+@media (min-width: 1050px) {
+  :root {
+    --intro-title: 9rem;
+  }
+}
+@media (min-width: 1200px) {
+  .main-wrapper {
+    max-width: 1400px;
+  }
+}

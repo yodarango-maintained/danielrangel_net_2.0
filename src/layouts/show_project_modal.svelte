@@ -41,10 +41,6 @@
     }, 1000);
   };
 
-  // ---------------- close the projec modal
-  // const closeProjetModal = ()=>{
-  //   dispatch('closeProjectModal')
-  // }
   const handleAcknowledgeInstructions = () => {
     instructionLayoutHide = true;
     document.cookie = "project-layout=true";
@@ -82,7 +78,7 @@
       </div>
     </div>
   {/if}
-  <!-- <div class="close-modal {entranceAnimation}" style={`background-color: ${modal.color};`} on:click={closeProjetModal}></div> -->
+
   <div
     class={`top-modal ${entranceAnimation}`}
     style={`background-color: ${modal.bkgColor};`}
@@ -99,6 +95,7 @@
     on:updateDescription={updateDescription}
     on:closemodal
     borderColor={modal.bkgColor}
+    links={{ git: modal.git, url: modal.url }}
   />
   {#if !showTechStack}
     <p class={`project-description ${descriptionAnimation}`}>
@@ -143,7 +140,7 @@
     z-index: 9;
     width: 3rem;
     height: 3rem;
-    background-image: url("images/icons/close.png");
+    background-image: url("/images/icons/close.png");
     display: block;
     background-position: center;
     background-size: contain;

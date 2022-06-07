@@ -6,6 +6,7 @@
   // -- props
   export let images = [];
   export let borderColor;
+  export let links = { git: "", url: "" };
 
   // --state
   let currentScreen = 0;
@@ -114,15 +115,22 @@
     toggleScreens(e.clientX);
   };
 
+  const gitLink = document.querySelector("#git-link");
+  const liveLink = document.querySelector("#glive-link");
+
   if (deviceType() === "desktop") {
     document.addEventListener("keydown", (e) => {
-      console.log(e.key);
+      console.log(e.key, gitLink, liveLink);
       if (e.key === "ArrowRight") {
         toggleScreens(10000);
       } else if (e.key === "ArrowLeft") {
         toggleScreens(0);
       } else if (e.key === "x") {
         dispatch("closemodal", {});
+      } else if (e.key === "g") {
+        location.href = links.git;
+      } else if (e.key === "l") {
+        location.href = links.url;
       }
     });
   }
@@ -170,6 +178,10 @@
 </section>
 
 <style>
+  #git-link,
+  #live-link {
+    display: none;
+  }
   .carrousel-wrapper {
     position: relative;
     top: calc((100vh - 60rem) / 3);

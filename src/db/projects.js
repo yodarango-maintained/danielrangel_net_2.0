@@ -99,7 +99,7 @@ export const projects = [
       "A database of recommended resources is offered which users can rate. This data is stored using mongoDB Atlas.",
     ],
     url: "https://my.biblescholar.app",
-    git: undefined,
+    git: "https://github.com/yodarango-saas",
     images: [
       "images/my.biblescholar/1.png",
       "images/my.biblescholar/1.png",
